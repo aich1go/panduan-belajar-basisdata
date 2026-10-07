@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Rangkuman UTS Basis Data</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .tab-btn.active {
+            background-color: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen p-3 md:p-8">
+
+    <div class="max-w-5xl mx-auto space-y-6">
+        
+        <!-- HEADER UTAMA -->
+        <header class="bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 text-white p-6 md:p-8 rounded-2xl shadow-xl">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="bg-blue-500/30 text-blue-200 text-xs font-semibold px-3 py-1 rounded-full border border-blue-400/30">
+                        PANDUAN BELAJAR UTS BASIS DATA
+                    </span>
+                    <h1 class="text-2xl md:text-4xl font-extrabold mt-2 tracking-tight">
+                        Rangkuman Komprehensif Materi Ujian
+                    </h1>
+                    <p class="text-blue-100/80 text-sm mt-1">
+                        Persiapan Kilat: Pemodelan ERD, Normalisasi (1NF - 5NF), & Aljabar Relasional
+                    </p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md px-4 py-3 rounded-xl border border-white/20 text-center">
+                    <div class="text-xs text-blue-200">Target Ujian</div>
+                    <div class="text-lg font-bold text-yellow-300">Nilai Maksimal 💯</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- NAVIGASI TAB -->
+        <div class="flex overflow-x-auto gap-2 p-1 bg-white rounded-xl shadow-sm border border-slate-200" id="tabContainer">
+            <button onclick="switchTab('erd')" id="tab-erd" class="tab-btn active px-5 py-2.5 rounded-lg text-sm font-semibold transition-all shrink-0">
+                1. Pemodelan ERD & Relasi
+            </button>
+            <button onclick="switchTab('normalisasi')" id="tab-normalisasi" class="tab-btn px-5 py-2.5 rounded-lg text-sm font-semibold text-slate-600 transition-all shrink-0">
+                2. Normalisasi (1NF - 5NF)
+            </button>
+            <button onclick="switchTab('aljabar')" id="tab-aljabar" class="tab-btn px-5 py-2.5 rounded-lg text-sm font-semibold text-slate-600 transition-all shrink-0">
+                3. Aljabar Relasional
+            </button>
+            <button onclick="switchTab('cheatsheet')" id="tab-cheatsheet" class="tab-btn px-5 py-2.5 rounded-lg text-sm font-semibold text-slate-600 transition-all shrink-0 bg-amber-50 text-amber-700 border border-amber-200">
+                ⚡ Cheat Sheet & Pola Soal
+            </button>
+        </div>
+
+        <!-- MODUL 1: ERD -->
+        <div id="content-erd" class="space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+                <div class="border-b border-slate-100 pb-4">
+                    <h2 class="text-xl font-bold text-blue-900">Modul 1: Konsep Entitas, Atribut & Relasi ERD</h2>
+                    <p class="text-sm text-slate-500">Dasar perancangan basis data konseptual dan logis.</p>
+                </div>
+
+                <!-- Entitas & Atribut -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <h3 class="font-bold text-slate-800 text-base mb-3 flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span> Entitas (Entity)
+                        </h3>
+                        <p class="text-sm text-slate-600 mb-2">Objek, benda, kejadian, atau konsep tidak berwujud yang dapat diidentifikasi secara unik.</p>
+                        <ul class="text-xs text-slate-600 space-y-1 list-disc pl-4">
+                            <li><b>Strong Entity:</b> Punya identifier/PK sendiri (misal: <i>PROYEK</i>, <i>ORANG</i>).</li>
+                            <li><b>Weak Entity:</b> Keberadaannya bergantung pada entitas lain dan tidak punya PK sendiri tanpa entitas induk (misal: <i>EPISODE</i>).</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <h3 class="font-bold text-slate-800 text-base mb-3 flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span> Jenis Atribut
+                        </h3>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li><b>Key Attribute (PK):</b> Pembeda unik antar baris data (misal: <i>Email_Orang</i>, <i>KodeProyek</i>).</li>
+                            <li><b>Multivalued Attribute:</b> Punya lebih dari satu nilai untuk satu entitas (misal: <i>Hobi</i>, <i>Peralatan</i>). Harus dipisah saat 1NF!</li>
+                            <li><b>Composite Attribute:</b> Bisa dipecah lagi (misal: <i>Nama_Lengkap</i> $\rightarrow$ <i>Nama_Depan</i>, <i>Nama_Belakang</i>).</li>
+                            <li><b>Derived Attribute:</b> Nilai hasil kalkulasi dari atribut lain (misal: <i>Usia</i> dari <i>Tanggal_Lahir</i>).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Konsep Relasi Kompleks -->
+                <div class="space-y-4">
+                    <h3 class="font-bold text-slate-800 text-base">Aturan Bisnis & Tipe Relasi Khusus di ERD</h3>
+                    
+                    <div class="grid md:grid-cols-3 gap-4 text-xs">
+                        <div class="p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                            <div class="font-bold text-blue-900 mb-1">Intersection Entity (M:N)</div>
+                            <p class="text-slate-600">Relasi Many-to-Many tidak bisa langsung diimplementasikan pada database relasional. Harus dipecah menjadi entitas persimpangan dengan dua relasi $1:M$.</p>
+                        </div>
+                        <div class="p-4 bg-indigo-50 border border-indigo-200 rounded-xl">
+                            <div class="font-bold text-indigo-900 mb-1">Barred Relationship</div>
+                            <p class="text-slate-600">Garis berpalang pada ERD yang menunjukkan bahwa PK dari entitas asal diwariskan menjadi komponen PK komposit dari intersection entity.</p>
+                        </div>
+                        <div class="p-4 bg-purple-50 border border-purple-200 rounded-xl">
+                            <div class="font-bold text-purple-900 mb-1">Exclusive Arc Relationship</div>
+                            <p class="text-slate-600">Aturan di mana suatu entitas hanya boleh berhubungan dengan <b>SALAH SATU</b> dari dua pilihan entitas induk (misal: <i>ADEGAN</i> terhubung ke <i>EPISODE</i> jika Serial, ATAU langsung ke <i>PROYEK</i> jika Film).</p>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4 text-xs">
+                        <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
+                            <div class="font-bold text-emerald-900 mb-1">Transferability Relasi</div>
+                            <ul class="space-y-1 text-slate-600">
+                                <li><b>Transferable:</b> Suatu entitas dapat dipindahkan hubungannya ke entitas induk lain (misal: Peralatan bisa dipakai bergantian di Proyek lain).</li>
+                                <li><b>Non-transferable:</b> Sekali terikat tidak bisa dipindah (misal: Adegan terikat permanen pada Episode induknya).</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl">
+                            <div class="font-bold text-amber-900 mb-1">Supertype & Subtype</div>
+                            <p class="text-slate-600">Pengelompokan entitas umum (Supertype) dan khusus (Subtype). Contoh: <i>PROYEK</i> sebagai supertype, dengan subtype <i>FILM</i> dan <i>SERIAL</i> (Disjoint constraint: wajib salah satu).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODUL 2: NORMALISASI -->
+        <div id="content-normalisasi" class="space-y-6 hidden">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+                <div class="border-b border-slate-100 pb-4">
+                    <h2 class="text-xl font-bold text-blue-900">Modul 2: Tahapan Normalisasi Basis Data (1NF - 5NF)</h2>
+                    <p class="text-sm text-slate-500">Proses mengorganisasi data untuk menghilangkan redundansi dan mencegah anomali data (<i>Insertion, Update, Deletion Anomalies</i>).</p>
+                </div>
+
+                <!-- Tahapan Normalisasi -->
+                <div class="space-y-4">
+                    
+                    <!-- 1NF -->
+                    <div class="p-4 bg-slate-50 border-l-4 border-blue-600 rounded-r-xl">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-slate-800 text-sm">1. First Normal Form (1NF)</h3>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded font-semibold">Atomic Values</span>
+                        </div>
+                        <p class="text-xs text-slate-600"><b>Syarat:</b> Setiap sel/kolom harus bernilai tunggal (<i>atomic</i>). Tidak boleh ada grup berulang (<i>repeating groups</i>) atau atribut bernilai ganda (<i>multivalued attributes</i>).</p>
+                        <div class="mt-2 text-xs bg-white p-2.5 rounded border border-slate-200 text-slate-700">
+                            <b>Tindakan:</b> Urai baris data sehingga setiap entitas bernilai tunggal dan tentukan Primary Key Komposit awalnya.
+                        </div>
+                    </div>
+
+                    <!-- 2NF -->
+                    <div class="p-4 bg-slate-50 border-l-4 border-indigo-600 rounded-r-xl">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-slate-800 text-sm">2. Second Normal Form (2NF)</h3>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-0.5 rounded font-semibold">Hilangkan Partial Dependency</span>
+                        </div>
+                        <p class="text-xs text-slate-600"><b>Syarat:</b> Sudah memenuhi 1NF dan **TIDAK ADA ketergantungan parsial**. Atribut non-key harus bergantung PENUH pada seluruh komponen Primary Key komposit, bukan hanya sebagian dari PK.</p>
+                        <div class="mt-2 text-xs bg-white p-2.5 rounded border border-slate-200 text-slate-700">
+                            <b>Tindakan:</b> Pisahkan atribut yang hanya bergantung pada sebagian PK menjadi tabel baru tersendiri.
+                        </div>
+                    </div>
+
+                    <!-- 3NF -->
+                    <div class="p-4 bg-slate-50 border-l-4 border-purple-600 rounded-r-xl">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-slate-800 text-sm">3. Third Normal Form (3NF)</h3>
+                            <span class="bg-purple-100 text-purple-800 text-xs px-2 py-0.5 rounded font-semibold">Hilangkan Transitive Dependency</span>
+                        </div>
+                        <p class="text-xs text-slate-600"><b>Syarat:</b> Sudah memenuhi 2NF dan **TIDAK ADA ketergantungan transitif**. Atribut non-key tidak boleh bergantung pada atribut non-key lainnya ($A \rightarrow B \rightarrow C$). Semua atribut non-key harus langsung bergantung pada PK.</p>
+                        <div class="mt-2 text-xs bg-white p-2.5 rounded border border-slate-200 text-slate-700">
+                            <b>Contoh:</b> `Nomor_Adegan` $\rightarrow$ `ID_Lokasi` $\rightarrow$ `Nama_Lokasi`. Maka `LOKASI` dipecah jadi tabel tersendiri!
+                        </div>
+                    </div>
+
+                    <!-- BCNF -->
+                    <div class="p-4 bg-slate-50 border-l-4 border-emerald-600 rounded-r-xl">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-slate-800 text-sm">4. Boyce-Codd Normal Form (BCNF / 3.5NF)</h3>
+                            <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded font-semibold">Strict Determinant Rule</span>
+                        </div>
+                        <p class="text-xs text-slate-600"><b>Syarat:</b> Bentuk 3NF yang lebih ketat. Untuk setiap Functional Dependency $X \rightarrow Y$, sisi penentu (<b>X</b>) **WAJIB merupakan Super Key / Candidate Key**.</p>
+                        <div class="mt-2 text-xs bg-white p-2.5 rounded border border-slate-200 text-slate-700">
+                            <b>Beda 3NF vs BCNF:</b> Pada 3NF, $X \rightarrow Y$ masih dibolehkan jika Y adalah bagian dari candidate key. BCNF melarang ini secara mutlak!
+                        </div>
+                    </div>
+
+                    <!-- 4NF & 5NF -->
+                    <div class="grid md:grid-cols-2 gap-4 pt-2">
+                        <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl">
+                            <div class="font-bold text-amber-900 text-xs mb-1">5. Fourth Normal Form (4NF)</div>
+                            <p class="text-xs text-slate-600 mb-2"><b>Hilangkan Multivalued Dependency (MVD / $X \twoheadrightarrow Y$):</b> Menangani kasus di mana satu entitas memiliki dua fakta multivalue yang saling independen (misal: Karakter memiliki banyak Aktor & banyak Kostum secara bebas).</p>
+                            <span class="text-[11px] font-semibold text-amber-800 bg-amber-100 px-2 py-0.5 rounded">Solusi: Pecah menjadi 2 tabel terpisah</span>
+                        </div>
+                        <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl">
+                            <div class="font-bold text-rose-900 text-xs mb-1">6. Fifth Normal Form (5NF / PJNF)</div>
+                            <p class="text-xs text-slate-600 mb-2"><b>Project-Join Normal Form:</b> Menangani <i>Join Dependency</i>. Memastikan jika tabel dipecah menjadi beberapa tabel kecil dan di-join kembali, hasilnya tepat sama tanpa kehilangan atau menghasilkan data semu (<i>spurious tuples</i>).</p>
+                            <span class="text-[11px] font-semibold text-rose-800 bg-rose-100 px-2 py-0.5 rounded">Reconstruction Integrity</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- MODUL 3: ALJABAR RELASIONAL -->
+        <div id="content-aljabar" class="space-y-6 hidden">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+                <div class="border-b border-slate-100 pb-4">
+                    <h2 class="text-xl font-bold text-blue-900">Modul 3: Operator Aljabar Relasional (Relational Algebra)</h2>
+                    <p class="text-sm text-slate-500">Bahasa kueri prosedural formal yang menjadi landasan teoritis eksekusi SQL pada DBMS.</p>
+                </div>
+
+                <!-- Operasi Dasar & Himpunan -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-3">
+                        <h3 class="font-bold text-slate-800 text-sm border-b pb-1">Operasi Dasar Satu Tabel</h3>
+                        
+                        <div class="p-3 bg-blue-50 border border-blue-100 rounded-lg text-xs space-y-1">
+                            <div class="font-bold text-blue-900">Selection ($\sigma$) $\rightarrow$ Memfilter BARIS</div>
+                            <p class="text-slate-600">Memilih tuple yang memenuhi kondisi tertentu.</p>
+                            <div class="font-mono bg-white p-1.5 rounded text-[11px] text-blue-800">
+                                $\sigma_{kota='Semarang' \wedge gaji > 5000000}(Karyawan)$
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-indigo-50 border border-indigo-100 rounded-lg text-xs space-y-1">
+                            <div class="font-bold text-indigo-900">Projection ($\pi$) $\rightarrow$ Memfilter KOLOM</div>
+                            <p class="text-slate-600">Memilih atribut tertentu. <b>OTOMATIS membuang duplikat!</b></p>
+                            <div class="font-mono bg-white p-1.5 rounded text-[11px] text-indigo-800">
+                                $\pi_{nama, no\_hp}(\sigma_{kota='Semarang'}(Pelanggan))$
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <h3 class="font-bold text-slate-800 text-sm border-b pb-1">Operasi Himpunan (Union-Compatible)</h3>
+                        <p class="text-[11px] text-slate-500 italic">Syarat: Jumlah kolom & tipe data berpasangan harus sama!</p>
+
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg text-xs space-y-1">
+                            <div class="font-bold text-slate-800">Union ($\cup$) & Intersection ($\cap$)</div>
+                            <p class="text-slate-600"><b>$\cup$:</b> Gabungan (Logika OR). <b>$\cap$:</b> Irisan (Logika AND).</p>
+                        </div>
+
+                        <div class="p-3 bg-red-50 border border-red-100 rounded-lg text-xs space-y-1">
+                            <div class="font-bold text-red-900">Set Difference ($-$) $\rightarrow$ Negasi / Belum Pernah</div>
+                            <p class="text-slate-600">Mencari data di R yang TIDAK ADA di S. Sifat: Non-komutatif.</p>
+                            <div class="font-mono bg-white p-1.5 rounded text-[11px] text-red-800">
+                                $\pi_{id\_pelanggan}(Pelanggan) - \pi_{id\_pelanggan}(Transaksi)$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Join & Division -->
+                <div class="space-y-4 pt-2">
+                    <h3 class="font-bold text-slate-800 text-sm border-b pb-1">Operasi Join & Division (Multi-Tabel)</h3>
+
+                    <div class="grid md:grid-cols-3 gap-4 text-xs">
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
+                            <div class="font-bold text-slate-800 mb-1">Theta Join ($\bowtie_\theta$) & Equijoin</div>
+                            <p class="text-slate-600">Penggabungan dengan kondisi $\theta$ (misal $<, >, =$ ). Kolom duplikat tetap dipertahankan.</p>
+                        </div>
+                        <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                            <div class="font-bold text-blue-900 mb-1">Natural Join ($\bowtie$)</div>
+                            <p class="text-slate-600">Equijoin otomatis pada kolom yang bernama sama. <b>Kolom duplikat dibuang</b> (paling sering dipakai).</p>
+                        </div>
+                        <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                            <div class="font-bold text-amber-900 mb-1">Rename ($\rho$) & Self-Join</div>
+                            <p class="text-slate-600">Mengubah nama tabel. Wajib untuk membandingkan baris pada tabel yang sama (misal: Atasan vs Bawahan).</p>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4 text-xs">
+                        <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+                            <div class="font-bold text-emerald-900 mb-1">Outer Join (Left / Right / Full)</div>
+                            <p class="text-slate-600 mb-1">Join ketat akan membuang record yang tidak punya pasangan. Outer Join dipertahankan dan diisi nilai <b>NULL</b>.</p>
+                            <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">Gunakan Left Outer Join untuk laporan seluruh data induk</span>
+                        </div>
+                        <div class="p-3 bg-purple-50 border border-purple-200 rounded-lg">
+                            <div class="font-bold text-purple-900 mb-1">Division ($\div$) $\rightarrow$ Query "UNTUK SEMUA"</div>
+                            <p class="text-slate-600 mb-1">Mencari entitas yang berhubungan dengan <b>SEMUA</b> tuple pada himpunan pembagi.</p>
+                            <div class="font-mono bg-white p-1 rounded text-[10px] text-purple-800">
+                                $\pi_{id\_pelanggan, id\_produk}(Transaksi) \div \pi_{id\_produk}(Produk)$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Query Tree Optimization -->
+                <div class="p-4 bg-slate-800 text-white rounded-xl space-y-2 text-xs">
+                    <div class="font-bold text-yellow-300">💡 Konsep Optimization: Relational Algebra Tree & Predicate Pushdown</div>
+                    <p class="text-slate-300">
+                        Query Optimizer DBMS mengubah kueri SQL menjadi pohon aljabar relasional (RA Tree). Optimizer akan melakukan <b>Predicate Pushdown</b>, yaitu menekan operasi Selection ($\sigma$) dan Projection ($\pi$) ke tingkat paling bawah (sebelum Join) agar ukuran tabel yang di-join sekecil mungkin sehingga eksekusi sangat cepat.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHEAT SHEET & POLA SOAL -->
+        <div id="content-cheatsheet" class="space-y-6 hidden">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+                <div class="border-b border-slate-100 pb-4">
+                    <h2 class="text-xl font-bold text-amber-800">⚡ Cheat Sheet: Panduan Praktis Menjawab Soal Ujian</h2>
+                    <p class="text-sm text-slate-500">Kunci cepat mengenali kata kunci soal dan menentukan solusi operator/normalisasi yang tepat.</p>
+                </div>
+
+                <!-- Trik Soal Aljabar Relasional -->
+                <div class="space-y-3">
+                    <h3 class="font-bold text-slate-800 text-sm">1. Panduan Kata Kunci Soal Aljabar Relasional</h3>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-amber-100 text-amber-900 font-bold border-b border-amber-200">
+                                    <th class="p-2.5">Kata Kunci Soal Ujian</th>
+                                    <th class="p-2.5">Operator yang Dipakai</th>
+                                    <th class="p-2.5">Pola Ekspresi Aljabar Relasional</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 text-slate-700">
+                                <tr>
+                                    <td class="p-2.5 font-semibold text-amber-900">"...membeli produk A ATAU produk B"</td>
+                                    <td class="p-2.5"><span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-mono">Union ($\cup$)</span></td>
+                                    <td class="p-2.5 font-mono text-[11px]">$(\pi_{id}( \sigma_{A} )) \cup (\pi_{id}( \sigma_{B} ))$</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-semibold text-amber-900">"...membeli produk A DAN produk B sekaligus"</td>
+                                    <td class="p-2.5"><span class="bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono">Intersection ($\cap$)</span></td>
+                                    <td class="p-2.5 font-mono text-[11px]">$(\pi_{id}( \sigma_{A} )) \cap (\pi_{id}( \sigma_{B} ))$</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-semibold text-amber-900">"...TIDAK PERNAH / BELUM PERNAH bertransaksi"</td>
+                                    <td class="p-2.5"><span class="bg-red-100 text-red-800 px-2 py-0.5 rounded font-mono">Difference ($-$)</span></td>
+                                    <td class="p-2.5 font-mono text-[11px]">$\pi_{id}(Pelanggan) - \pi_{id}(Transaksi)$</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-semibold text-amber-900">"...membeli SEMUA / SETIAP produk"</td>
+                                    <td class="p-2.5"><span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-mono">Division ($\div$)</span></td>
+                                    <td class="p-2.5 font-mono text-[11px]">$(\pi_{id\_p, id\_pr}(Transaksi)) \div (\pi_{id\_pr}(Produk))$</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-semibold text-amber-900">"...membandingkan data dalam 1 tabel (gaji A > gaji B)"</td>
+                                    <td class="p-2.5"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-mono">Rename ($\rho$) + Join</span></td>
+                                    <td class="p-2.5 font-mono text-[11px]">$\pi_{E1.nama, E2.nama}( \rho_{E1}(K) \bowtie_{E1.gaji > E2.gaji} \rho_{E2}(K) )$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Summary Normalisasi Fast Checklist -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-800 text-sm">2. Checklist Cepat Diagnosa Normalisasi</h3>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs text-center">
+                        <div class="p-3 bg-slate-50 border rounded-xl">
+                            <div class="font-bold text-blue-600 mb-1">Cek 1NF</div>
+                            <div>Sel bernilai ganda / array?</div>
+                            <div class="text-[10px] text-slate-500 mt-1">Solusi: Pecah jadi baris tunggal</div>
+                        </div>
+                        <div class="p-3 bg-slate-50 border rounded-xl">
+                            <div class="font-bold text-indigo-600 mb-1">Cek 2NF</div>
+                            <div>Ada kolom tergantung ke SEBAGIAN PK Komposit?</div>
+                            <div class="text-[10px] text-slate-500 mt-1">Solusi: Pisahkan ke tabel baru</div>
+                        </div>
+                        <div class="p-3 bg-slate-50 border rounded-xl">
+                            <div class="font-bold text-purple-600 mb-1">Cek 3NF / BCNF</div>
+                            <div>Atribut non-key menentukan atribut non-key lain?</div>
+                            <div class="text-[10px] text-slate-500 mt-1">Solusi: Pisahkan entitas tersendiri</div>
+                        </div>
+                        <div class="p-3 bg-slate-50 border rounded-xl">
+                            <div class="font-bold text-amber-600 mb-1">Cek 4NF</div>
+                            <div>Ada MVD ($X \twoheadrightarrow Y$) independen?</div>
+                            <div class="text-[10px] text-slate-500 mt-1">Solusi: Buat tabel persimpangan khusus</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- FOOTER / MOTIVASI -->
+        <footer class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-center space-y-2">
+            <div class="text-sm font-bold text-slate-800">Semangat untuk UTS Basis Data Besok! 🎉</div>
+            <p class="text-xs text-slate-500">Pahami konsep dasar, perhatikan baik-baik Primary Key & Foreign Key, dan terapkan logika pola aljabar relasional dengan teliti.</p>
+        </footer>
+
+    </div>
+
+    <!-- SCRIPT TABS INTERAKTIF -->
+    <script>
+        function switchTab(tabName) {
+            // Hide all contents
+            document.getElementById('content-erd').classList.add('hidden');
+            document.getElementById('content-normalisasi').classList.add('hidden');
+            document.getElementById('content-aljabar').classList.add('hidden');
+            document.getElementById('content-cheatsheet').classList.add('hidden');
+
+            // Deactivate all tab buttons
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => {
+                tab.classList.remove('active', 'bg-blue-600', 'text-white');
+                tab.classList.add('text-slate-600');
+            });
+
+            // Show selected content
+            document.getElementById('content-' + tabName).classList.remove('hidden');
+
+            // Activate selected tab
+            const activeTab = document.getElementById('tab-' + tabName);
+            activeTab.classList.add('active');
+
+            // Re-render MathJax if formulas exist
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+    </script>
+</body>
+</html>
